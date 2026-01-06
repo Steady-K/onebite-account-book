@@ -35,6 +35,8 @@ const mockData = [
 
 function reducer(state, action) {
   switch (action.type) {
+    case "INIT":
+      return action.data;
     case "CREATE":
       return [action.data, ...state];
     case "UPDATE":
@@ -48,8 +50,8 @@ function reducer(state, action) {
   }
 }
 
-const TransactionStateContext = createContext();
-const TransactionDispatchContext = createContext();
+export const TransactionStateContext = createContext();
+export const TransactionDispatchContext = createContext();
 
 function App() {
   const [transaction, dispatch] = useReducer(reducer, mockData);
@@ -92,7 +94,6 @@ function App() {
 
   return (
     <>
-      <button>버튼</button>
       <TransactionStateContext.Provider value={transaction}>
         <TransactionDispatchContext.Provider
           value={{

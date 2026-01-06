@@ -1,0 +1,107 @@
+.TransactionItem {
+  background-color: #1f213a;
+  border-radius: 5px;
+  padding: 22px 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .TransactionItem {
+    gap: 10px;
+  }
+
+  .TransactionItem .name {
+    margin-bottom: 10px;
+    display: inline-block;
+    font-size: 16px;
+    margin-right: 20px;
+  }
+
+  .TransactionItem .category {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 14px;
+  }
+
+  .TransactionItem .amount {
+    margin-top: 10px;
+    width: 150px;
+    font-size: 23px;
+  }
+
+  .TransactionItem .date {
+    margin-top: 10px;
+    color: gray;
+    margin-bottom: 5px;
+  }
+
+  .TransactionItem .button_container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .TransactionItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .TransactionItem .category {
+    max-width: 100px;
+  }
+
+  .TransactionItem .name {
+    width: 180;
+    font-size: 16px;
+  }
+
+  .TransactionItem .amount {
+    font-size: 18px;
+    font-weight: bold;
+    flex: 1;
+    text-align: right;
+    margin-right: 20px;
+  }
+
+  .TransactionItem .date {
+    width: 100px;
+    word-break: keep-all;
+    color: gray;
+  }
+}
+
+.TransactionItem .category {
+  background-color: #141625;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: gray;
+}
+
+.TransactionItem .amount_income {
+  color: #26e4a6;
+}
+
+.TransactionItem .amount_expense {
+  color: #ff2222;
+}
+
+.TransactionItem .button_container {
+  display: flex;
+  gap: 10px;
+}
+
+.TransactionItem .edit_button,
+.delete_button {
+  width: 50px;
+  font-size: 14px;
+  text-align: right;
+  background-color: #141625;
+  padding: 10px 5px;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+}

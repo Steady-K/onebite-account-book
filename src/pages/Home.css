@@ -1,0 +1,29 @@
+.Home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+}
+
+.Home header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Home .new_button {
+  background-color: #7c5df9;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
+
+.Home .transaction_list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

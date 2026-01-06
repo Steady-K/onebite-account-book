@@ -1,9 +1,16 @@
+@font-face {
+  font-family: "NanumPenScript-Regular";
+  src: url("/NanumPenScript-Regular.ttf");
+}
 html,
 body {
   margin: 0px;
   width: 100%;
   background-color: #141625c6;
   display: flex;
+}
+body * {
+  font-family: "NanumPenScript-Regular";
 }
 
 #root {
