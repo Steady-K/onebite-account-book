@@ -1,0 +1,75 @@
+.TransactionEditor {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.TransactionEditor > div {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.TransactionEditor > div > .description {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.TransactionEditor input,
+select {
+  background-color: #1f213a;
+  width: 100%;
+  padding: 20px 10px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+}
+
+.TransactionEditor input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* 아이콘 색 반전 → 흰색처럼 보이게 */
+}
+
+.TransactionEditor .type_container {
+  display: flex;
+  gap: 10px;
+}
+
+.TransactionEditor .type_container .expense {
+  width: 50%;
+  background-color: #ff2222;
+}
+
+.TransactionEditor .type_container .income {
+  width: 50%;
+  background-color: #26e4a6;
+}
+
+.TransactionEditor .button_container {
+  margin-top: 40px;
+  display: flex;
+}
+
+.TransactionEditor .button_container .submit_button {
+  background-color: #7c5df9;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.TransactionEditor .button_container .cancel_button {
+  background-color: #ff2222;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  color: white;
+}

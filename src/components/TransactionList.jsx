@@ -1,34 +1,50 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import TransactionItem from "./TransactionItem";
 import "./TransactionList.css";
-import { TransactionStateContext } from "../App";
+import { useNavigate } from "react-router-dom";
+import { CATEGORY_LABEL } from "../constants/category";
 
-const TransactionList = () => {
-  const transactions = useContext(TransactionStateContext);
-  const sortedTransactions = transactions.sort((a, b) => {
+const TransactionList = ({ transactions, pivotDate }) => {
+  const [filteredType, setFilteredType] = useState("all");
+  useEffect(() => {
+    if (filteredType !== "all") {
+      setFilteredType("all");
+    }
+  }, [pivotDate]);
+
+  const sortedTransactions = [...transactions].sort((a, b) => {
     return new Date(b.date) - new Date(a.date);
   });
+
+  const onChangeFilteredType = (e) => {
+    setFilteredType(e.target.value);
+  };
+
+  const getFilteredTransactions = () => {
+    if (filteredType === "all") return sortedTransactions;
+    return sortedTransactions.filter(
+      (transaction) => transaction.category === filteredType
+    );
+  };
+
+  const nav = useNavigate();
+
   return (
     <div className="TransactionList">
       <div className="menu_bar">
-        <select>
-          <option value="all">전체</option>
-          <option value="living">생활</option>
-          <option value="food">식비</option>
-          <option value="transport">교통</option>
-          <option value="shopping">쇼핑</option>
-          <option value="subscription">구독</option>
-          <option value="finance">금융</option>
-          <option value="medical">의료</option>
-          <option value="education">교육</option>
-          <option value="leisure">여가</option>
-          <option value="etc">기타</option>
+        <select value={filteredType} onChange={onChangeFilteredType}>
+          <option value="all"> 전체</option>
+          {Object.entries(CATEGORY_LABEL).map(([key, label]) => (
+            <option key={key} value={key}>
+              {label}
+            </option>
+          ))}
         </select>
-        <Button text={"+ 내역 추가"} />
+        <Button onClick={() => nav(`/new-transaction`)} text={"+ 내역 추가"} />
       </div>
       <div className="list_wrapper">
-        {sortedTransactions.map((transaction) => (
+        {getFilteredTransactions().map((transaction) => (
           <TransactionItem key={transaction.id} {...transaction} />
         ))}
       </div>

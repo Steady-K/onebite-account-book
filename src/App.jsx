@@ -12,24 +12,24 @@ const mockData = [
     name: "마라탕 & 꿔바로우",
     amount: 59000,
     type: "expense",
-    category: "🍚 식비",
-    date: new Date().getTime() + 1,
+    category: "food",
+    date: new Date("2026-01-07").getTime(),
   },
   {
     id: 1,
     name: "월세",
     amount: 500000,
     type: "expense",
-    category: "🏠 생활",
-    date: new Date().getTime() + 2,
+    category: "living",
+    date: new Date("2026-01-06").getTime(),
   },
   {
     id: 2,
     name: "월급",
     amount: 3500000,
     type: "income",
-    category: "🏢 급여",
-    date: new Date().getTime() + 3,
+    category: "salary",
+    date: new Date("2025-12-10").getTime(),
   },
 ];
 
@@ -57,11 +57,11 @@ function App() {
   const [transaction, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
-  const onCreateTransaction = (name, amount, type, category, date) => {
+  const onCreateTransaction = ({ name, amount, type, category, date }) => {
     dispatch({
-      id: idRef.current++,
       type: "CREATE",
       data: {
+        id: idRef.current++,
         name,
         amount,
         type,
@@ -71,7 +71,7 @@ function App() {
     });
   };
 
-  const onUpdateTransaction = (id, name, amount, type, category, date) => {
+  const onUpdateTransaction = ({ id, name, amount, type, category, date }) => {
     dispatch({
       type: "UPDATE",
       data: {
