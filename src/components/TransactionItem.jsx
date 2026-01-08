@@ -1,10 +1,17 @@
 import "./TransactionItem.css";
 import { useNavigate } from "react-router-dom";
 import { CATEGORY_LABEL } from "../constants/category";
+import { useContext } from "react";
+import { TransactionDispatchContext } from "../App";
 
 export default function TransactionItem(props) {
   const nav = useNavigate();
   const { id, name, amount, type, category, date } = props;
+  const { onDeleteTransaction } = useContext(TransactionDispatchContext);
+
+  const onClickDeleteButton = () => {
+    onDeleteTransaction(id);
+  };
 
   return (
     <div className="TransactionItem">
@@ -29,7 +36,9 @@ export default function TransactionItem(props) {
         >
           수정
         </div>
-        <div className="delete_button">삭제</div>
+        <div onClick={onClickDeleteButton} className="delete_button">
+          삭제
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import "./TransactionEditor.css";
 import { CATEGORY_LABEL } from "../constants/category";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const getStringDate = (targetDate) => {
@@ -18,7 +18,7 @@ const getStringDate = (targetDate) => {
   return `${year}-${month}-${date}`;
 };
 
-export default function TransactionEditor({ onSubmit }) {
+export default function TransactionEditor({ onSubmit, initData }) {
   const nav = useNavigate();
   const [input, setInput] = useState({
     name: "",
@@ -58,6 +58,18 @@ export default function TransactionEditor({ onSubmit }) {
       return nav(-1);
     }
   };
+  useEffect(() => {
+    if (initData) {
+      setInput({
+        name: initData.name,
+        amount: initData.amount,
+        type: initData.type,
+        category: initData.category,
+        date: new Date(initData.date),
+      });
+    }
+  }, [initData]);
+
   return (
     <div className="TransactionEditor">
       <div>

@@ -8,3 +8,14 @@
   white-space: nowrap;
   color: #ffffff;
 }
+
+.Delete-Button {
+  background-color: #ff2222;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 18px;
+  white-space: nowrap;
+  color: #ffffff;
+}
