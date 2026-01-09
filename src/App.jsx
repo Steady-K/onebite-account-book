@@ -1,61 +1,80 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, data } from "react-router-dom";
 import Home from "./pages/Home";
 import NewTransaction from "./pages/NewTransaction";
 import EditTransaction from "./pages/EditTransaction";
 import Notfound from "./pages/Notfound";
-import { createContext, useReducer, useRef } from "react";
-
-const mockData = [
-  {
-    id: 0,
-    name: "마라탕 & 꿔바로우",
-    amount: 59000,
-    type: "expense",
-    category: "food",
-    date: new Date("2026-01-07").getTime(),
-  },
-  {
-    id: 1,
-    name: "월세",
-    amount: 500000,
-    type: "expense",
-    category: "living",
-    date: new Date("2026-01-06").getTime(),
-  },
-  {
-    id: 2,
-    name: "월급",
-    amount: 3500000,
-    type: "income",
-    category: "salary",
-    date: new Date("2025-12-10").getTime(),
-  },
-];
+import { createContext, useEffect, useReducer, useRef, useState } from "react";
 
 function reducer(state, action) {
+  let nextState;
   switch (action.type) {
     case "INIT":
-      return action.data;
+      {
+        nextState = action.data;
+      }
+      break;
     case "CREATE":
-      return [action.data, ...state];
+      {
+        nextState = [action.data, ...state];
+      }
+      break;
     case "UPDATE":
-      return state.map((item) =>
-        String(item.id) === String(action.data.id) ? action.data : item
-      );
+      {
+        nextState = state.map((item) =>
+          String(item.id) === String(action.data.id) ? action.data : item
+        );
+      }
+      break;
     case "DELETE":
-      return state.filter((item) => String(item.id) !== String(action.id));
+      {
+        nextState = state.filter(
+          (item) => String(item.id) !== String(action.id)
+        );
+      }
+      break;
     default:
       return state;
   }
+  localStorage.setItem("transaction", JSON.stringify(nextState));
+  return nextState;
 }
 
 export const TransactionStateContext = createContext();
 export const TransactionDispatchContext = createContext();
 
 function App() {
-  const [transaction, dispatch] = useReducer(reducer, mockData);
-  const idRef = useRef(3);
+  const [isLoading, setIsLoading] = useState(true);
+  const [transaction, dispatch] = useReducer(reducer, []);
+  const idRef = useRef(0);
+
+  useEffect(() => {
+    const storeData = localStorage.getItem("transaction");
+    if (!storeData) {
+      setIsLoading(false);
+      return;
+    }
+    const parsedData = JSON.parse(storeData);
+    if (!Array.isArray(parsedData)) {
+      setIsLoading(false);
+      return;
+    }
+
+    let maxId = 0;
+    parsedData.forEach((item) => {
+      if (Number(item.id) > maxId) {
+        maxId = Number(item.id);
+      }
+    });
+
+    idRef.current = maxId + 1;
+
+    dispatch({
+      type: "INIT",
+      data: parsedData,
+    });
+    setIsLoading(false);
+  }, []);
 
   const onCreateTransaction = ({ name, amount, type, category, date }) => {
     dispatch({
@@ -91,6 +110,10 @@ function App() {
       id,
     });
   };
+
+  if (isLoading) {
+    return <div>데이터 로딩 중입니다 ...</div>;
+  }
 
   return (
     <>

@@ -1,27 +1,37 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import TransactionEditor from "../components/TransactionEditor";
 import { TransactionDispatchContext, TransactionStateContext } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
+import usePageTitle from "../hooks/usePageTitle";
 
 const EditTransaction = () => {
-  const { id } = useParams();
-
-  const transactions = useContext(TransactionStateContext);
-
-  const editTransaction = transactions.find(
-    (transaction) => transaction.id === Number(id)
-  );
-
+  const params = useParams();
+  const nav = useNavigate();
   const { onUpdateTransaction, onDeleteTransaction } = useContext(
     TransactionDispatchContext
   );
-  const nav = useNavigate();
+  const [curTransactionItem, setCurTransacionItem] = useState();
+
+  const transactions = useContext(TransactionStateContext);
+
+  const currentTransactionItem = transactions.find(
+    (transaction) => String(transaction.id) === String(params.id)
+  );
+  usePageTitle(`${params.id}번 내역 수정`);
+
+  useEffect(() => {
+    if (!currentTransactionItem) {
+      window.alert("존재하지 않는 내역입니다.");
+      nav("/", { replace: true });
+    }
+    setCurTransacionItem(currentTransactionItem);
+  }, [params.id]);
 
   const onSubmit = (input) => {
     onUpdateTransaction({
-      id: editTransaction.id,
+      id: currentTransactionItem.id,
       name: input.name,
       amount: input.amount,
       type: input.type,
@@ -35,8 +45,8 @@ const EditTransaction = () => {
       "삭제하면 복구할 수 없습니다.\n정말 삭제 하시겠습니까?"
     );
     if (!isConfirmed) return;
-    onDeleteTransaction(Number(id));
-    nav(-1);
+    onDeleteTransaction(String(params.id));
+    nav("/", { replace: true });
   };
 
   return (
@@ -52,7 +62,10 @@ const EditTransaction = () => {
           />
         }
       />
-      <TransactionEditor initData={editTransaction} onSubmit={onSubmit} />
+      <TransactionEditor
+        initData={currentTransactionItem}
+        onSubmit={onSubmit}
+      />
     </div>
   );
 };

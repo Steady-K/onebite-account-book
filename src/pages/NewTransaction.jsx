@@ -2,12 +2,14 @@ import Header from "../components/Header";
 import Button from "../components/Button";
 import TransactionEditor from "../components/TransactionEditor";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TransactionDispatchContext } from "../App";
+import usePageTitle from "../hooks/usePageTitle";
 
 const NewTransaction = () => {
   const { onCreateTransaction } = useContext(TransactionDispatchContext);
   const nav = useNavigate();
+  usePageTitle("새 내역 작성하기");
 
   const onSubmit = (input) => {
     onCreateTransaction({

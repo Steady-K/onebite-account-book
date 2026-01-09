@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import TransactionList from "../components/TransactionList";
 import "./Home.css";
 import { TransactionStateContext } from "../App";
+import usePageTitle from "../hooks/usePageTitle";
 
 const getMonthlyData = (pivotDate, transactions) => {
   const beginTime = new Date(
@@ -33,6 +34,7 @@ const Home = () => {
   const [pivotDate, setPivotDate] = useState(new Date());
 
   const monthlyData = getMonthlyData(pivotDate, transactions);
+  usePageTitle("한입 가계부");
 
   const onIncreaseMonth = () => {
     setPivotDate(new Date(pivotDate.getFullYear(), pivotDate.getMonth() + 1));
