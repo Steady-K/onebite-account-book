@@ -3,6 +3,28 @@
   display: flex;
   gap: 10px;
 }
+.TransactionList .summary_bar {
+  display: flex;
+  gap: 10px;
+  justify-content: end;
+}
+.TransactionList .summary_bar .summary_income {
+  color: #26e4a6;
+}
+.TransactionList .summary_bar .summary_expense {
+  color: #ff2222;
+}
+.summary_total {
+  font-weight: bold;
+}
+
+.summary_total.plus {
+  color: #26e4a6;
+}
+
+.summary_total.minus {
+  color: #ff2222;
+}
 
 .TransactionList .menu_bar select {
   background-color: #2a2d45;
